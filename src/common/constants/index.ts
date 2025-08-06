@@ -1,0 +1,2 @@
+export const DATABSE_CONFIG = 'DATABASE_CONFIG';
+export const JOB_OFFER_CONFIG = 'DATABASE_CONFIG';

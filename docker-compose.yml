@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - '${DB_PORT}:5432'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${APP_PORT}:3000'
+    environment:
+      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@db:${DB_PORT}/${DB_DATABASE}
+      PORT: 3000
+    depends_on:
+      - db
+    volumes:
+      - ./logs:/app/logs
+    command: sh -c "mkdir -p logs && npm run start:prod"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: farshid.beheshti@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - '8080:80'
+    depends_on:
+      - db
+
+volumes:
+  db_data:

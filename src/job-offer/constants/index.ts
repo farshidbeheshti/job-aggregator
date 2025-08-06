@@ -1,0 +1,2 @@
+export const FETCH_JOB_SCHEDULER_NAME = 'FETCH_JOBs';
+export const CLEAN_JOB_SCHEDULER_NAME = 'CLEAN_JOBs';

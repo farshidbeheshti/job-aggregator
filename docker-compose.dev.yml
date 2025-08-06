@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${APP_PORT}:3000'
+    environment:
+      DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@db:${DB_PORT}/${DB_DATABASE}
+      PORT: 3000
+    volumes:
+      - .:/app
+      - /app/node_modules # Exclude node_modules from being overwritten by host volume
+    depends_on:
+      - db
+    command: npm run start:dev

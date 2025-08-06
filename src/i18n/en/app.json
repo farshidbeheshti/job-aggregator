@@ -1,0 +1,23 @@
+{
+  "running": "App is running!",
+  "up": "🚀 Application is running on http://localhost:{port}",
+  "errors": {
+    "internal_server_error": "Internal server error"
+  },
+  "job-offers": {
+    "findAll": {
+      "summary": "Get all job offers with optional filtering",
+      "description": "Returns an array of job offers."
+    },
+    "findOne": {
+      "summary": "Get a job offer by ID",
+      "description": "Returns a single job offer.",
+      "notFound": "Job offer not found."
+    },
+    "remove": {
+      "summary": "Delete a job offer by ID",
+      "success": "Job offer successfully deleted.",
+      "notFound": "Job offer not found."
+    }
+  }
+}
