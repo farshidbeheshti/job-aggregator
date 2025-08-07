@@ -8,4 +8,3 @@ export class AppService {
     return this.i18n.t('app.running');
   }
 }
-
