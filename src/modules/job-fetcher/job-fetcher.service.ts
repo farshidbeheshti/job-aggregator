@@ -5,10 +5,10 @@ import { AxiosResponse } from 'axios';
 import { timer, lastValueFrom } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { JobProviderException } from '@src/common/exceptions/';
-import { TransformedJobOffer } from '../job-offers/interfaces/';
+import { ITransformedJobOffer } from '../job-offers/interfaces/';
 import * as configuration from '@nestjs/config';
 import { CronJob } from 'cron';
-import { JobProvider } from '@src/common/interfaces/';
+import { IJobProvider } from '@src/common/interfaces/';
 import { JobProviderRegistry } from './providers/';
 import { JOB_PROVIDERS } from './providers/';
 import { BaseJobProvider } from '@src/common/types/';
@@ -68,12 +68,12 @@ export class JobFetcherService implements OnModuleInit {
     }
   }
 
-  private async _processProviderJobs(provider: JobProvider): Promise<void> {
+  private async _processProviderJobs(provider: IJobProvider): Promise<void> {
     try {
       this.logger.log(`Fetching jobs from ${provider.getProviderName()}...`);
       const rawDataResponse = await this._fetchRawData(provider);
 
-      const jobs: TransformedJobOffer[] = provider.transform(
+      const jobs: ITransformedJobOffer[] = provider.transform(
         rawDataResponse.data,
       );
       const { newJobsCount, updatedJobsCount } =
@@ -102,7 +102,7 @@ export class JobFetcherService implements OnModuleInit {
   }
 
   private async _fetchRawData(
-    provider: JobProvider,
+    provider: IJobProvider,
   ): Promise<AxiosResponse<any>> {
     return lastValueFrom(
       this.httpService.get(provider.getApiUrl()).pipe(

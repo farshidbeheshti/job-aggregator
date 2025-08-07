@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Provider2RawData } from '@src/modules/job-offers/interfaces';
-import { TransformedJobOffer } from '@src/modules/job-offers/interfaces';
+import {
+  IProvider2RawData,
+  ITransformedJobOffer,
+} from '@src/modules/job-offers/interfaces';
+
 import { BaseJobProvider } from '@src/common/types/base-job-provider';
 
 @Injectable()
@@ -17,8 +20,8 @@ export class Provider2Service extends BaseJobProvider {
     return 'https://assignment.devotel.io/api/provider2/jobs';
   }
 
-  transform(rawData: Provider2RawData): TransformedJobOffer[] {
-    const transformedJobs: TransformedJobOffer[] = [];
+  transform(rawData: IProvider2RawData): ITransformedJobOffer[] {
+    const transformedJobs: ITransformedJobOffer[] = [];
     for (const jobId in rawData.data.jobsList) {
       const job = rawData.data.jobsList[jobId];
       const {
@@ -27,7 +30,7 @@ export class Provider2Service extends BaseJobProvider {
         compensation: { currency },
         location: { remote },
       } = job;
-      const transformedJob: TransformedJobOffer = {
+      const transformedJob: ITransformedJobOffer = {
         jobId: jobId,
         title: job.position,
         city: job.location.city,

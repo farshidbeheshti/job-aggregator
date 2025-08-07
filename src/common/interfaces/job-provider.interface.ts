@@ -1,7 +1,7 @@
-import { TransformedJobOffer } from './transformed-job-offer.interface';
+import { ITransformedJobOffer } from './transformed-job-offer.interface';
 
-export interface JobProvider {
+export interface IJobProvider {
   getProviderName(): string;
   getApiUrl(): string;
-  transform(rawData: any): TransformedJobOffer[];
+  transform(rawData: any): ITransformedJobOffer[];
 }

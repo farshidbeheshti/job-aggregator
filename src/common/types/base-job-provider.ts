@@ -1,8 +1,7 @@
-import { JobProvider } from '../interfaces';
-import { TransformedJobOffer } from '../interfaces/transformed-job-offer.interface';
+import { IJobProvider, ITransformedJobOffer } from '../interfaces';
 
-export abstract class BaseJobProvider implements JobProvider {
+export abstract class BaseJobProvider implements IJobProvider {
   abstract getProviderName(): string;
   abstract getApiUrl(): string;
-  abstract transform(rawData: any): TransformedJobOffer[];
+  abstract transform(rawData: any): ITransformedJobOffer[];
 }

@@ -2,11 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Not, IsNull, Brackets } from 'typeorm';
 import { JobOffer } from './job-offer.entity';
-import { TransformedJobOffer } from './interfaces';
+import { ITransformedJobOffer } from './interfaces';
 import { LocationService } from '../locations/';
 import { Skill, SkillService } from '../skills';
 import { QueryJobOfferDto } from './dto';
-
 import { IPaginatedData } from '@src/common/interfaces';
 
 @Injectable()
@@ -107,7 +106,7 @@ export class JobOfferService {
   }
 
   async saveTransformedJobs(
-    jobs: TransformedJobOffer[],
+    jobs: ITransformedJobOffer[],
   ): Promise<{ newJobsCount: number; updatedJobsCount: number }> {
     let newJobsCount = 0;
     let updatedJobsCount = 0;
@@ -124,7 +123,7 @@ export class JobOfferService {
   }
 
   private async _processAndSaveJob(
-    job: TransformedJobOffer,
+    job: ITransformedJobOffer,
   ): Promise<{ isNew: boolean }> {
     const location = await this.locationService.findOrCreate(
       job.city || '',

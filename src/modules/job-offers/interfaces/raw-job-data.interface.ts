@@ -1,4 +1,4 @@
-export interface Provider1RawJob {
+export interface IProvider1RawJob {
   jobId: string;
   title: string;
   details: {
@@ -14,15 +14,15 @@ export interface Provider1RawJob {
   postedDate: string;
 }
 
-export interface Provider1RawData {
+export interface IProvider1RawData {
   metadata: {
     requestId: string;
     timestamp: string;
   };
-  jobs: Provider1RawJob[];
+  jobs: IProvider1RawJob[];
 }
 
-export interface Provider2RawJob {
+export interface IProvider2RawJob {
   position: string;
   location: {
     city: string;
@@ -45,11 +45,11 @@ export interface Provider2RawJob {
   datePosted: string;
 }
 
-export interface Provider2RawData {
+export interface IProvider2RawData {
   status: string;
   data: {
     jobsList: {
-      [key: string]: Provider2RawJob;
+      [key: string]: IProvider2RawJob;
     };
   };
 }

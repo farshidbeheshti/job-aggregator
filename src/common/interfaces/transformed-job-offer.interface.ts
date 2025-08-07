@@ -1,4 +1,4 @@
-export interface TransformedJobOffer {
+export interface ITransformedJobOffer {
   jobId: string;
   title: string;
   company: string;

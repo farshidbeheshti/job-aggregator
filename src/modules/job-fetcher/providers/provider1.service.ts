@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Provider1RawData } from '@src/modules/job-offers/interfaces/';
-import { TransformedJobOffer } from '@src/modules/job-offers/interfaces';
+import {
+  IProvider1RawData,
+  ITransformedJobOffer,
+} from '@src/modules/job-offers/interfaces/';
 import { BaseJobProvider } from '@src/common/types/base-job-provider';
 
 @Injectable()
@@ -13,7 +15,7 @@ export class Provider1Service extends BaseJobProvider {
     return 'https://assignment.devotel.io/api/provider1/jobs';
   }
 
-  transform(rawData: Provider1RawData): TransformedJobOffer[] {
+  transform(rawData: IProvider1RawData): ITransformedJobOffer[] {
     return rawData.jobs.map((job) => {
       const {
         details: { type: jobType },
@@ -34,7 +36,7 @@ export class Provider1Service extends BaseJobProvider {
         datePosted: job.postedDate,
         rawData: job,
       };
-    }) as TransformedJobOffer[];
+    }) as ITransformedJobOffer[];
   }
 
   private parseMinSalary(salaryRange: string | null): number | null {
