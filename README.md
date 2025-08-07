@@ -89,22 +89,22 @@ To add a new job provider (e.g., `Provider3`):
     }
     ```
 
-3.  **Register the new provider:** finally, Add your new provider service to the `job-fetcher.module.ts`. It is injected and automatically registered as a provider. - **`src/modules/job-fetcher/job-fetcher.module.ts`:**
+3.  **Register the new provider:** finally, Add your new provider service to the `job-fetcher.module.ts`. It is injected and automatically registered as a provider - **`src/modules/job-fetcher/job-fetcher.module.ts`:**
 
-          ```typescript
-          // Add Provider3Service to the providers array
-          providers: [
-            {
-              provide: JOB_PROVIDERS,
-              useFactory: () => [
-                new Provider1Service(),
-                new Provider2Service(),
-                new Provider3Service() // Add your new provider here ...
-              ]
-            }
-            /* ... */
-          ],
-          ```
+    ```typescript
+    // Add Provider3Service to the providers array
+    providers: [
+      {
+        provide: JOB_PROVIDERS,
+        useFactory: () => [
+          new Provider1Service(),
+          new Provider2Service(),
+          new Provider3Service() // Add your new provider here ...
+        ]
+      }
+      /* ... */
+    ],
+    ```
 
     After these steps, your new job provider will be integrated into the system and its `fetchJobs` method will be called during the job collection process.
 
