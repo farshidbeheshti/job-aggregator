@@ -72,7 +72,7 @@ The project leverages the **Strategy Pattern** combined with a form of **Registr
 
 <a id='adding-provider'></a>
 
-## How to add New Job Providers
+## How TO Add New Job Providers
 
 To add a new job provider (e.g., `Provider3`):
 
