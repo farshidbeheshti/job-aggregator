@@ -30,7 +30,7 @@ services:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: farshid.beheshti@gmail.com
+      PGADMIN_DEFAULT_EMAIL: pg@admin.com
       PGADMIN_DEFAULT_PASSWORD: password
     ports:
       - '8080:80'
