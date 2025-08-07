@@ -2,15 +2,17 @@
 
 ## Overview
 
-The Job Offer Aggregator is a robust backend application built with NestJS, designed to efficiently collect, store, and manage job offers from diverse providers. It exposes RESTful APIs, enabling seamless access to aggregated job data.
+The Job Offer Aggregator is a scalable backend application built with NestJS, designed to efficiently collect, store, and manage job offers from diverse providers. It exposes RESTful APIs, enabling seamless access to aggregated job data.
 
 ## Key Features
 
-- **Automated Job Collection:** Gathers job offers from multiple sources.
-- **Resilience with Retries:** Implements retry mechanisms with **exponential backoff** for failed job fetching operations, ensuring data completeness and system robustness.
+- **Automated Provider Integration:** Job providers are automatically registered and invoked into the job aggregator service (scheduler to fetch job offers), simplifying the addition of new data sources/providers.
+- **Resilient Data Fetching:** Implements a **retry mechanism** with **exponential backoff** for failed job fetching operations, ensuring data completeness and system reliability.
 - **Data Management & Cleanup:** Handles soft-deleted data, with automated processes for periodic cleanup to maintain data integrity and optimize storage.
-- **RESTful API:** Provides a well-documented API for querying and retrieving job offers.
-- **Scalable Architecture & Extensibility:** Built on NestJS, the project offers a modular and scalable foundation. Adding new job providers is straightforward adn easy (see the [guide](#adding-provider) below, how to add new provider).
+- **Configurable Scheduling:** The frequency of job fetching and data cleanup is configurable via environment variables.
+- **Trackable Logging:** Logs are stored in the files (the folder `logs` at the project directory).
+- **RESTful API:** Provides a well-documented API with **Swagger** documentation at the `/docs` URL of the project.
+- **Scalable Architecture & Extensibility:** Built on NestJS, the project offers a modular and scalable foundation to add new job providers.See the guide below for adding new job provider!.
 
 ## Running The Project
 
@@ -26,19 +28,19 @@ Run the project:
 docker-compose up --build
 ```
 
-## Design Patterns for Extensibility
-
-The project leverages the **Strategy Pattern** combined with a form of **Registry Pattern** to enable easy addition of new job providers:
-
-- **Strategy Pattern:** The `BaseJobProvider` acts as the common interface for all job providers. Each concrete provider (e.g., `Provider1Service`, `Provider2Service`) implements this interface, encapsulating its specific job fetching logic. The `JobFetcherService` uses these provider strategies polymorphically, allowing for flexible and decoupled integration of new data sources.
-
-- **Registry Pattern:** The `job-provider.registry.ts` (specifically the `createJobProviders` function) functions as a registry. It centralizes the collection and provision of all available `BaseJobProvider` implementations, simplifying the management and injection of new provider instances into the system.
-
-### Logs are stored in the files in the `log` folder, managed using `Winston` for comprehensive logging.
-
-### Accessing the API Documentation
+### Accessing the API
 
 Once the application is running, you can access the interactive API documentation (Swagger UI) by navigating to `http://localhost:<APP_PORT>/docs` in your web browser. Replace `<APP_PORT>` with the value configured in your `.env` file (default is `3000`).
+
+### Access Logs
+
+Logs are stored in the files, managed using `Winston` for comprehensive logging. See `logs` folder to view logs!
+
+## Database Design Note
+
+It's worth noting that for a job offer aggregation system, a highly normalized database schema for skills and locations might not always be the most performant or practical approach, especially given the dynamic and often unstructured nature of job data. Denormalization or a document-based approach could offer more flexibility and better read performance for certain use cases.
+
+However, this project utilizes a normalized schema for `skills` and `locations` to demonstrate proficiency in database normalization principles and the effective use of relational database features with TypeORM.
 
 ## ERD
 
@@ -59,6 +61,14 @@ The project uses the following environment variables, which can be configured in
 | `DB_DATABASE`                      | Name of the PostgreSQL database.                                                                                                   |
 | `DB_PORT`                          | Port number for the PostgreSQL database.                                                                                           |
 | `APP_PORT`                         | Port on which the NestJS application will run.                                                                                     |
+
+## Design Patterns for Extensibility
+
+The project leverages the **Strategy Pattern** combined with a form of **Registry Pattern** to enable easy addition of new job providers:
+
+- **Strategy Pattern:** The `BaseJobProvider` acts as the common interface for all job providers. Each concrete provider (e.g., `Provider1Service`, `Provider2Service`) implements this interface, encapsulating its specific job fetching logic. The `JobFetcherService` uses these provider strategies polymorphically, allowing for flexible and decoupled integration of new data sources.
+
+- **Registry Pattern:** The `job-provider.registry.ts` (specifically the `createJobProviders` function) functions as a registry. It centralizes the collection and provision of all available `BaseJobProvider` implementations, simplifying the management and injection of new provider instances into the system.
 
 <a id='adding-provider'></a>
 
