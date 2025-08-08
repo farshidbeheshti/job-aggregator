@@ -30,10 +30,6 @@ describe('JobFetcherModule (e2e)', () => {
     await jobOfferService.removeAll();
   });
 
-  beforeEach(async () => {
-    await jobOfferService.removeAll();
-  });
-
   afterAll(async () => {
     await app.close();
   });
