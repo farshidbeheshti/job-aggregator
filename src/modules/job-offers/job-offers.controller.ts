@@ -7,6 +7,7 @@ import {
   HttpCode,
   HttpStatus,
   ParseIntPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { JobOfferService } from './job-offer.service';
 import { QueryJobOfferDto } from './dto/query-job-offer.dto';
@@ -56,9 +57,12 @@ export class JobOffersController {
   @ApiResponse({ status: 404, description: findOneSwagger.notFound })
   async findOne(
     @Param('id', ParseIntPipe) id: string,
-  ): Promise<JobOfferResponseDto | null> {
+  ): Promise<JobOfferResponseDto> {
     const jobOffer = await this.jobOfferService.findOne(+id);
-    return jobOffer && new JobOfferResponseDto(jobOffer);
+    if (!jobOffer) {
+      throw new NotFoundException('Job offer not found');
+    }
+    return new JobOfferResponseDto(jobOffer);
   }
 
   @Delete(':id')
