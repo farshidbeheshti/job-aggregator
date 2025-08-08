@@ -4,11 +4,13 @@ import { AppModule } from '@src/app.module';
 import { JobFetcherService } from '../job-fetcher.service';
 import { HttpService } from '@nestjs/axios';
 import { of } from 'rxjs';
+import { JobOfferService } from '@src/modules/job-offers';
 
 describe('JobFetcherModule (e2e)', () => {
   let app: INestApplication;
   let jobFetcherService: JobFetcherService;
   let httpService: HttpService;
+  let jobOfferService: JobOfferService;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -20,6 +22,16 @@ describe('JobFetcherModule (e2e)', () => {
 
     jobFetcherService = moduleFixture.get<JobFetcherService>(JobFetcherService);
     httpService = moduleFixture.get<HttpService>(HttpService);
+    jobOfferService = moduleFixture.get<JobOfferService>(JobOfferService);
+    await jobOfferService.removeAll();
+  });
+
+  beforeEach(async () => {
+    await jobOfferService.removeAll();
+  });
+
+  beforeEach(async () => {
+    await jobOfferService.removeAll();
   });
 
   afterAll(async () => {
@@ -90,6 +102,8 @@ describe('JobFetcherModule (e2e)', () => {
     const loggerSpy = jest.spyOn(jobFetcherService['logger'], 'log');
 
     await jobFetcherService.fetchAndStoreJobs();
+
+    console.log(loggerSpy.mock.calls);
 
     expect(
       loggerSpy.mock.calls.some((call) =>
