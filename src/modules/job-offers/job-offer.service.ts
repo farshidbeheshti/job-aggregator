@@ -161,4 +161,14 @@ export class JobOfferService {
       return { isNew: true };
     }
   }
+
+  // Used for e2e tests only, since it needs to
+  // remove jobs before and after running tests.
+  async removeAll(): Promise<void> {
+    await this.jobOfferRepository
+      .createQueryBuilder()
+      .delete()
+      .from(JobOffer)
+      .execute();
+  }
 }

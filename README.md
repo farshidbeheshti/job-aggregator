@@ -120,10 +120,16 @@ To add a new job provider (e.g., `Provider3`):
 
 ## Tests:
 
-`fetchAndStoreJobs` as the key functionality, are covered by unit test to ensure reliability and correctness.
+To run both unit and e2e tests application should be running because it intracts with the application database. NOTE: These tests are not isolated and are designed to demonstrate testing capabilities rather than for use in a production environment.
 
-### Run Tests
+### Run Unit Tests
 
 ```shell
 run npm test
+```
+
+### Run E2E Tests
+
+```shell
+run npm test:e2e
 ```
